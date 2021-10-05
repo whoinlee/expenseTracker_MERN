@@ -70,18 +70,19 @@ export const GlobalProvider = ({ children }:Props) => {
         'Content-Type': 'application/json'
       }
     }
-    console.log("transaction: ", transaction)
+    // console.log("GlobalState :: addTransaction, transaction: ", transaction);
     try {
-      const res = await axios.post(transaction_url, transaction, config);
-      console.log("res: ", res)
+      // const res = await axios.post(transaction_url, transaction, config);  //----> ERROR
+      const postData = {"text": transaction.text, "amount": transaction.amount};
+      const res = await axios.post('/api/v1/transactions', postData, config);
+      // console.log("GlobalState :: addTransaction, res: ", res)
       const dataObj:any = res.data;
-      console.log("dataObj: ", dataObj)
       dispatch({
         type: 'ADD_TRANSACTION',
         payload: dataObj.data
       });
     } catch (err:any) {
-      console.log("err: ", err)
+      // console.log("GlobalState :: addTransaction, err: ", err)
       dispatch({
         type: 'TRANSACTION_ERROR',
         payload: err.response.data.error
