@@ -13,6 +13,8 @@ const app = express();
 
 //-- using router 
 const transactions = require('./routes/transactions');  //-- using express.Router
+
+app.use(express.json());    //-- allows to use bodyParser
 app.use('/api/v1/transactions', transactions);
 
 const PORT = process.env.PORT || 5000;

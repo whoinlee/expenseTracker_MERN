@@ -7,9 +7,9 @@ const connectDB = async() => {
         });
         //useCreateIndex: true,  //-- not supported w. Mongoose >= 6.0
 
-        console.log(`db.js :: MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
+        console.log(`db.js :: connectDB, MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
     } catch (err) {
-        console.log(`db.js :: Error: ${err.message}`.red);
+        console.log(`db.js :: connectDB, Error: ${err.message}`.red);
         process.exit(1);    //1: failure, app shut down
     }
 }
