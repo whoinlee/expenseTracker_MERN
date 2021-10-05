@@ -1,14 +1,19 @@
-const express = require('express');
-const dotenv = require('dotenv');
+const express = require('express'); //-- web framework
+const dotenv = require('dotenv');   //-- for global variables. loads environment variables from a .env file into process.env
+const morgan = require('morgan');   //-- HTTP request logger middleware for node.js
 const colors = require('colors');
-const morgan = require('morgan');
+const connectDB = require('./config/db');
 
 dotenv.config({path: './config/config.env'});
 
-const transactions = require('./routes/transactions');
+connectDB();
+
 const app = express();
-// app.get('/', (req, res) => res.send('Hello'));   //==> use routes/Router
-app.use('api/v1/transactions', transactions);
+//app.get('/', (req, res) => res.send('Hello WhoIN')); 
+
+//-- using router 
+const transactions = require('./routes/transactions');  //-- using express.Router
+app.use('/api/v1/transactions', transactions);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));
