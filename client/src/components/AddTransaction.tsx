@@ -13,7 +13,7 @@ const AddTransaction = () => {
     const onSubmit = (e:React.FormEvent) => {
       e.preventDefault();
       addTransaction({
-        id: Math.floor(Math.random() * 100000000),
+        _id: Math.floor(Math.random() * 100000000),
         text,
         amount:+amount
       });

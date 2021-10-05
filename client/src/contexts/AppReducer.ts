@@ -14,7 +14,7 @@ const AppReducer = (state:State, action:Action) => {
       case 'DELETE_TRANSACTION':
         return {
           ...state,
-          transactions: state.transactions.filter((transaction) => transaction.id !== action.payload)
+          transactions: state.transactions.filter((transaction) => transaction._id !== action.payload)
         };
       case 'ADD_TRANSACTION':
         return {

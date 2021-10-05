@@ -46,20 +46,47 @@ export const GlobalProvider = ({ children }:Props) => {
       })
     }
   }
-  getTransactions();
+  // getTransactions(); //--is called in the TransactionList, using useEffect
   
-  const deleteTransaction = (id:number) => {
-    dispatch({
-      type: 'DELETE_TRANSACTION',
-      payload: id
-    });
+  const deleteTransaction = async (id:number) => {
+    // console.log("GlobalState :: deleteTransaction, id?? ", id)
+    try {
+      await axios.delete(`${transaction_url}/${id}`);
+      dispatch({
+        type: 'DELETE_TRANSACTION',
+        payload: id
+      });
+    } catch (err:any) {
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.response.data.error
+      })
+    }
   };
   
-  const addTransaction = (transaction:TransactionType) => {
-    dispatch({
-      type: 'ADD_TRANSACTION',
-      payload: transaction
-    });
+  const addTransaction = async (transaction:TransactionType) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    console.log("transaction: ", transaction)
+    try {
+      const res = await axios.post(transaction_url, transaction, config);
+      console.log("res: ", res)
+      const dataObj:any = res.data;
+      console.log("dataObj: ", dataObj)
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        payload: dataObj.data
+      });
+    } catch (err:any) {
+      console.log("err: ", err)
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: err.response.data.error
+      })
+    }
   };
 
   return (

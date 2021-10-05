@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 //-- Components
 import Transaction from './Transaction';
 //-- Contexts
@@ -8,13 +8,18 @@ import '../styles/Transactions.css';
 
 
 const TransactionList = () => {
-  const { transactions } = useContext(GlobalContext);
+  const { transactions, getTransactions } = useContext(GlobalContext);
+
+  useEffect(()=> {
+    getTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
       <h3>History</h3>
       <ul className="list">
-        {transactions.map((transaction) => <Transaction transaction={transaction} key={transaction.id}/>)}
+        {transactions.map((transaction) => <Transaction transaction={transaction} key={transaction._id}/>)}
       </ul>
     </>
   );

@@ -11,6 +11,10 @@ connectDB();
 const app = express();
 //app.get('/', (req, res) => res.send('Hello WhoIN')); 
 
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
 //-- using router 
 const transactions = require('./routes/transactions');  //-- using express.Router
 
