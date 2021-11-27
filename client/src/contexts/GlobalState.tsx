@@ -22,8 +22,8 @@ const initialState:State = {
 //-- Create context
 export const GlobalContext = createContext(initialState);
 
-
-const transaction_url = "/api/v1/transactions";
+//-- no need of adding localhost:5000 (it's already added in the package.json as proxy)
+const transaction_url = "/api/v1/transactions"; 
 type Props = { children?: React.ReactNode };
 //-- Provider component
 export const GlobalProvider = ({ children }:Props) => {
@@ -31,13 +31,13 @@ export const GlobalProvider = ({ children }:Props) => {
 
   const getTransactions = async() => {
     try {
-      const res = await axios.get(transaction_url);
+      const res = await axios.get(transaction_url); /***/
       // console.log("res:: ", res)
       const dataObj:any = res.data;
-      const transactions = dataObj.data;
+      // const transactions = dataObj.data;
       dispatch({
         type: 'GET_TRANSACTIONS',
-        payload: transactions
+        payload: dataObj.data
       })
     } catch (err:any) {
       dispatch({
@@ -51,7 +51,7 @@ export const GlobalProvider = ({ children }:Props) => {
   const deleteTransaction = async (id:number) => {
     // console.log("GlobalState :: deleteTransaction, id?? ", id)
     try {
-      await axios.delete(`${transaction_url}/${id}`);
+      await axios.delete(`${transaction_url}/${id}`); /***/
       dispatch({
         type: 'DELETE_TRANSACTION',
         payload: id
@@ -74,9 +74,10 @@ export const GlobalProvider = ({ children }:Props) => {
     try {
       // const res = await axios.post(transaction_url, transaction, config);  //----> ERROR
       const postData = {"text": transaction.text, "amount": transaction.amount};
-      const res = await axios.post('/api/v1/transactions', postData, config);
+      const res = await axios.post('/api/v1/transactions', postData, config); /***/
       // console.log("GlobalState :: addTransaction, res: ", res)
       const dataObj:any = res.data;
+      // const transactionData = dataObj.data;
       dispatch({
         type: 'ADD_TRANSACTION',
         payload: dataObj.data
@@ -94,7 +95,9 @@ export const GlobalProvider = ({ children }:Props) => {
     <GlobalContext.Provider value={{transactions: state.transactions, 
                                     error: state.error, 
                                     loading: state.loading, 
-                                    getTransactions, deleteTransaction, addTransaction}} >
+                                    getTransactions, 
+                                    deleteTransaction, 
+                                    addTransaction}} >
       {children}
     </GlobalContext.Provider>
   );

@@ -14,6 +14,7 @@ const Transaction = ({ transaction }:Props) => {
   const sign = transaction.amount < 0 ? '-' : '+';
 
   return (
+    //** transaction._id **//
     <li className={transaction.amount < 0 ? 'minus' : 'plus'}>
         {transaction.text} <span>{sign}${numberWithCommas(Math.abs(transaction.amount))}</span>
         <button onClick={() => deleteTransaction(transaction._id)} className="delete-btn">x</button>

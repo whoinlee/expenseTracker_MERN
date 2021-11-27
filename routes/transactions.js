@@ -1,17 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-// router.get ('/', (req, res) => res.send("Hi, there! Finally working!!!"));
+//-- step1
+// router.get("/", (req, res) =>
+//   res.send("Hi, there! We are using express.Router!!!")
+// );
 
-const { getTransactions, addTransaction, deleteTransaction  } = require('../controllers/transactionController');
-router
-    .route ('/')
-    .get(getTransactions)
-    .post(addTransaction);
+//-- step2
+// const { getTransactions } = require("../controllers/transactionController");
+// router.route("/").get(getTransactions);
 
-router
-    .route('/:id')
-    .delete(deleteTransaction);
+//-- step3
+const {
+  getTransactions,
+  addTransaction,
+  deleteTransaction,
+} = require("../controllers/transactionController");
 
+router.route("/").get(getTransactions).post(addTransaction);
+router.route("/:id").delete(deleteTransaction);
 
 module.exports = router;
